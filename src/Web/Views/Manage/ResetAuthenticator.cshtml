@@ -1,0 +1,18 @@
+﻿@{ ViewData["Title"] = "Reset autentifikacijskog ključa";
+                ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication); }
+
+<h4>@ViewData["Title"]</h4>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>Potrebno je rekonfigurisati aplikaciju nakon reset-a.</strong>
+    </p>
+    <p>
+        Ovaj proces vrši reset i recovery ključeva, ako pogrešno konfigurišete aplikaciju pri ovom koraku, možete izgubiti pristup računu.
+    </p>
+</div>
+<div>
+    <form asp-action="ResetAuthenticator" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">Reset autentifikacijskog ključa</button>
+    </form>
+</div>

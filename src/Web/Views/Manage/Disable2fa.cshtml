@@ -1,0 +1,21 @@
+﻿@{ ViewData["Title"] = "Disable two-factor authentication (2FA)";
+                ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication); }
+
+<h2>Deaktivacija dvofaktorne autentifikacije</h2>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>Ova akcija isključuje dvofaktornu autentifikaciju.</strong>
+    </p>
+    <p>
+        Isključivanje 2FA ne mijenja ključeve. Ako želite promijeniti ključeve
+        onda uradite reset ključeva u aplikaciji. <a asp-action="ResetAuthenticatorWarning"></a>
+    </p>
+</div>
+
+<div>
+    <form asp-action="Disable2fa" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">Deaktivacija 2FA</button>
+    </form>
+</div>

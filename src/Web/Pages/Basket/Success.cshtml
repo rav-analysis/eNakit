@@ -1,0 +1,17 @@
+﻿@page
+@model SuccessModel
+@{ ViewData["Title"] = "Checkout Complete"; }
+
+<section class="esh-catalog-hero">
+</section>
+
+<div class="container">
+    <h1>Hvala Vam na povjerenju!</h1>
+    <form action="../../api/mail/send" method="post">
+        <section class="esh-basket-item col-xs-push-7 col-xs-4 text-left">
+            <input type="submit" class="btn esh-basket-checkout" value="Nastavak kupovine" />
+        </section>
+    </form>
+    @*<a asp-page="/Index">Nastavak kupovine</a>*@
+</div>
+

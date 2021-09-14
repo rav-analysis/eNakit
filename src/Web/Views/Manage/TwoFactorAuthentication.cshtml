@@ -1,0 +1,41 @@
+﻿@model TwoFactorAuthenticationViewModel
+@{ ViewData["Title"] = "Two-factor authentication";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication); }
+
+<h4>Two-factor autentifikacija</h4>
+@if (Model.Is2faEnabled)
+{
+    if (Model.RecoveryCodesLeft == 0)
+    {
+<div class="alert alert-danger">
+    <strong>Nemate više recovery kodova.</strong>
+    <p>Morate <a asp-action="GenerateRecoveryCodes">generisati novi set kodova</a>prije prijave pomoću recovery kodova.</p>
+</div> }
+else if (Model.RecoveryCodesLeft == 1)
+{
+<div class="alert alert-danger">
+    <strong>Ostao Vam je 1 recovery kod.</strong>
+    <p>Možete <a asp-action="GenerateRecoveryCodes">generisati novi set kodova.</a>.</p>
+</div> }
+else if (Model.RecoveryCodesLeft <= 3)
+{
+<div class="alert alert-warning">
+    <strong>Ostalo Vam je @Model.RecoveryCodesLeft recovery kodova.</strong>
+    <p>Trebali bi <a asp-action="GenerateRecoveryCodes">generisati novi set kodova.</a>.</p>
+</div> }
+
+<a asp-action="Disable2faWarning" class="btn btn-default">Isključite two-factor autentifikaciju</a>
+                <a asp-action="GenerateRecoveryCodes" class="btn btn-default">Reset recovery kodova</a>}
+
+<h5>Autentifikacijska aplikacija</h5>
+@if (!Model.HasAuthenticator)
+{
+<a asp-action="EnableAuthenticator" class="btn btn-default">Dodajte autentifikacijsku aplikaciju</a> }
+            else
+            {
+<a asp-action="EnableAuthenticator" class="btn btn-default">Konfigurišite autentifikacijsku aplikaciju</a>
+                <a asp-action="ResetAuthenticatorWarning" class="btn btn-default">Reset autentifikacijskog ključa</a>}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

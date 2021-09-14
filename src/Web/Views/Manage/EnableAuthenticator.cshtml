@@ -1,0 +1,53 @@
+﻿@model EnableAuthenticatorViewModel
+@{ ViewData["Title"] = "Enable authenticator";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication); }
+
+<h4>Aktivacija dvofaktorne autentifikacije</h4>
+<div>
+    <p>Da bi aktivirali autentifikacijsku aplikaciju uradite slijedeće:</p>
+    <ol class="list">
+        <li>
+            <p>
+                Skinite Microsoft Authenticator ili Google Authenticator
+            </p>
+        </li>
+        <li>
+            <p>Skenirajte QR kod ili unesite ovaj ključ <kbd>@Model.SharedKey</kbd> u aplikaciju. Razmak i veliko/malo slovo ne prave razliku.</p>
+            <div id="qrCode"></div>
+            <div id="qrCodeData" data-url="@Html.Raw(Model.AuthenticatorUri)"></div>
+        </li>
+        <li>
+            <p>
+                Kada skenirate kod ili unesete gore navedeni ključ vaša aplikacija će Vam pružiti kod koji trebate unijeti u dole navedeno polje.
+            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post">
+                        <div class="form-group">
+                            <label asp-for="Code" class="control-label">Verifikacijski kod</label>
+                            <input asp-for="Code" class="form-control" autocomplete="off" />
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-default">Potvrda</button>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ol>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script type="text/javascript" src="~/lib/qrcode/qrcode.js"></script>
+    <script type="text/javascript">
+        new QRCode(document.getElementById("qrCode"),
+            {
+                text: "@Html.Raw(Model.AuthenticatorUri)",
+                width: 150,
+                height: 150
+            });</script>
+}
+
+

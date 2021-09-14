@@ -1,0 +1,82 @@
+﻿@page "{handler?}"
+@model IndexModel
+@{ ViewData["Title"] = "Basket"; }
+<section class="esh-catalog-hero">
+</section>
+
+<div class="container">
+
+    @if (Model.BasketModel.Items.Any())
+    {
+<form method="post">
+    <article class="esh-basket-titles row">
+        <br />
+        <section class="esh-basket-title col-xs-3">Proizvod</section>
+        <section class="esh-basket-title col-xs-3 hidden-lg-down"></section>
+        <section class="esh-basket-title col-xs-2">Cijena</section>
+        <section class="esh-basket-title col-xs-2">Količina</section>
+        <section class="esh-basket-title col-xs-2">Ukupno</section>
+    </article>
+    <div class="esh-catalog-items row">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        @for (int i = 0; i < Model.BasketModel.Items.Count; i++)
+        {
+            var item = Model.BasketModel.Items[i];
+<article class="esh-basket-items row">
+    <div>
+        <section class="esh-basket-item esh-basket-item--middle col-lg-3 hidden-lg-down">
+            <img class="esh-basket-image" src="@item.PictureUrl" />
+        </section>
+        <section class="esh-basket-item esh-basket-item--middle col-xs-3">@item.ProductName</section>
+        <section class="esh-basket-item esh-basket-item--middle col-xs-2">BAM @item.UnitPrice.ToString("N2")</section>
+        <section class="esh-basket-item esh-basket-item--middle col-xs-2">
+            <input type="hidden" name="@("Items[" + i + "].Id")" value="@item.Id" />
+            <input type="number" class="esh-basket-input" min="0" name="@("Items[" + i + "].Quantity")" value="@item.Quantity" />
+        </section>
+        <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-xs-2">BAM @Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")</section>
+    </div>
+    <div class="row">
+
+    </div>
+</article>                }
+
+        <div class="container">
+            <article class="esh-basket-titles esh-basket-titles--clean row">
+                <section class="esh-basket-title col-xs-10"></section>
+                <section class="esh-basket-title col-xs-2">Sa dostavom</section>
+            </article>
+
+            <article class="esh-basket-items row">
+                <section class="esh-basket-item col-xs-10"></section>
+                <section class="esh-basket-item esh-basket-item--mark col-xs-2">BAM @Model.BasketModel.Total().ToString("N2")</section>
+            </article>
+
+            <article class="esh-basket-items row">
+                <section class="esh-basket-item col-xs-7"></section>
+            </article>
+        </div>
+        <div class="row">
+            <section class="esh-basket-item col-xs-1">
+                <a asp-page="/Index" class="btn esh-basket-checkout text-white">Nastavak kupovine</a>
+            </section>
+            <section class="esh-basket-item col-xs-push-7 col-xs-4">
+
+                <button class="btn esh-basket-checkout" name="updatebutton" value="" type="submit"
+                        asp-page-handler="Update">
+                    Ažuriranje
+                </button>
+                <a asp-page="./Checkout" class="btn esh-basket-checkout">Potvrda</a>
+            </section>
+        </div>
+    </div>
+</form> }
+            else
+            {
+<h3 class="esh-catalog-items row">
+    Korpa je prazna.
+</h3>
+
+                <section class="esh-basket-item">
+                    <a asp-page="/Index" class="btn esh-basket-checkout text-white">Nastavak kupovine</a>
+                </section>}
+</div>
